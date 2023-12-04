@@ -24,35 +24,35 @@ public class QuizeService {
 
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
 
-          //List<Integer> questions = //call the generate url
-//        Quiz quiz = new Quiz();
-//        quiz.setTitle(title);
-//        quiz.setQuestions(questions);
-//        quizeRepository.save(quiz);
+          List<Integer> questions = //call the generate url
+          Quiz quiz = new Quiz();
+          quiz.setTitle(title);
+          quiz.setQuestions(questions);
+          quizeRepository.save(quiz);
         return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
     public ResponseEntity<List<QuestionRequest>> getQuizQuestions(Integer id) {
-//        Optional<Quiz> quiz = quizeRepository.findById(id);
-//        List<Question> questionFromDB = quiz.get().getQuestions();
+       Optional<Quiz> quiz = quizeRepository.findById(id);
+       List<Question> questionFromDB = quiz.get().getQuestions();
         List<QuestionRequest> questionForUsers = new ArrayList<>();
-//        for (Question q : questionFromDB) {
-//            QuestionRequest qr = new QuestionRequest(q.getId(), q.getQuestionTitle(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
-//            questionForUsers.add(qr);
-//        }
+       for (Question q : questionFromDB) {
+           QuestionRequest qr = new QuestionRequest(q.getId(), q.getQuestionTitle(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
+           questionForUsers.add(qr);
+       }
         return new ResponseEntity<>(questionForUsers, HttpStatus.OK);
     }
 
     public ResponseEntity<Integer> calculateResult(Integer id, List<Response> response) {
         Quiz quiz = quizeRepository.findById(id).get();
-//        List<Question> questions = quiz.getQuestions();
+       List<Question> questions = quiz.getQuestions();
         int right = 0;
-//        int i = 0;
-//        for (Response r : response) {
-//            if (r.getResponse().equals(questions.get(i).getRightAnswer()))
-//                right++;
-//            i++;
-//        }
+       int i = 0;
+       for (Response r : response) {
+           if (r.getResponse().equals(questions.get(i).getRightAnswer()))
+               right++;
+           i++;
+       }
         return new ResponseEntity<>(right, HttpStatus.OK);
     }
 }
